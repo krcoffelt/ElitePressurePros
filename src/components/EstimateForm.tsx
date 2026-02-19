@@ -44,10 +44,17 @@ export function EstimateForm() {
 
       const payload = (await response.json()) as EstimateResponse;
 
-      if (!response.ok || !payload.ok) {
+      if (!payload.ok) {
         setStatus("error");
         setStatusMessage(payload.error || "Could not submit your request. Please try again.");
         setFieldErrors(payload.fieldErrors || {});
+        return;
+      }
+
+      if (!response.ok) {
+        setStatus("error");
+        setStatusMessage("Could not submit your request. Please try again.");
+        setFieldErrors({});
         return;
       }
 
