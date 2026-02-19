@@ -13,6 +13,11 @@ export const baseMetadata: Metadata = {
   alternates: {
     canonical: "/"
   },
+  icons: {
+    icon: "/images/ElitePressureProsKC_Logo.svg",
+    shortcut: "/images/ElitePressureProsKC_Logo.svg",
+    apple: "/images/ElitePressureProsKC_Logo.svg"
+  },
   openGraph: {
     title,
     description,
@@ -22,9 +27,7 @@ export const baseMetadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/ElitePressurePros_logo.jpg",
-        width: 2024,
-        height: 2024,
+        url: "/images/ElitePressureProsKC_Logo.svg",
         alt: "Elite Pressure Bros logo"
       }
     ]
@@ -33,7 +36,7 @@ export const baseMetadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/ElitePressurePros_logo.jpg"]
+    images: ["/images/ElitePressureProsKC_Logo.svg"]
   },
   keywords: [
     "pressure washing Kansas City",
@@ -48,7 +51,7 @@ export const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: siteContent.brandName,
-  image: `${siteUrl}/images/ElitePressurePros_logo.jpg`,
+  image: `${siteUrl}/images/ElitePressureProsKC_Logo.svg`,
   url: siteUrl,
   telephone: siteContent.contact.phoneDisplay,
   email: siteContent.contact.email,

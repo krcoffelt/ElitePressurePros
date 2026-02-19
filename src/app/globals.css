@@ -1,5 +1,5 @@
 :root {
-  /* Logo sampled palette from public/images/ElitePressurePros_logo.jpg */
+  /* Logo sampled palette from public/images/ElitePressureProsKC_Logo.svg */
   --epb-navy: #000020;
   --epb-cyan: #00c8f8;
   --epb-blue: #003098;
@@ -92,6 +92,18 @@ p {
 .section-lead {
   color: var(--epb-text-muted);
   max-width: 68ch;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .site-header {
@@ -268,32 +280,41 @@ p {
   margin-bottom: 0.8rem;
 }
 
-.gallery-grid {
+.gallery-shell {
+  display: block;
+}
+
+.carousel-wrap {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr 1.2fr 1fr;
+  align-items: center;
 }
 
-.gallery-item {
+.carousel-slide {
   margin: 0;
+  border: 1px solid var(--epb-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(4, 11, 49, 0.65);
+  transition: transform 320ms ease, opacity 320ms ease, box-shadow 320ms ease;
 }
 
-.gallery-item .image-frame {
-  min-height: 220px;
+.carousel-slide .image-frame {
+  min-height: clamp(220px, 25vw, 320px);
+  height: 100%;
 }
 
-.gallery-item figcaption {
-  margin-top: 0.55rem;
-  color: var(--epb-text-muted);
-  font-size: 0.92rem;
+.carousel-slide.left,
+.carousel-slide.right {
+  opacity: 0.8;
+  transform: scale(0.92);
 }
 
-.gallery-item.featured {
-  grid-column: span 2;
-}
-
-.gallery-item.featured .image-frame {
-  min-height: 300px;
+.carousel-slide.center {
+  transform: scale(1.03);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
+  border-color: rgba(0, 200, 248, 0.5);
 }
 
 .testimonial p {
@@ -480,8 +501,9 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .carousel-wrap {
+    gap: 0.65rem;
+    grid-template-columns: 1fr 1.1fr 1fr;
   }
 
   .top-nav a:not(.btn) {
@@ -493,13 +515,25 @@ button:focus-visible {
   .service-grid,
   .why-grid,
   .testimonial-grid,
-  .areas-grid,
-  .gallery-grid {
+  .areas-grid {
     grid-template-columns: 1fr;
   }
 
-  .gallery-item.featured {
-    grid-column: auto;
+  .carousel-wrap {
+    gap: 0.45rem;
+  }
+
+  .carousel-slide .image-frame {
+    min-height: 140px;
+  }
+
+  .carousel-slide.left,
+  .carousel-slide.right {
+    transform: scale(0.9);
+  }
+
+  .carousel-slide.center {
+    transform: scale(1);
   }
 
   .sticky-cta {

@@ -9,7 +9,7 @@ export function Header() {
       <div className="shell nav-shell">
         <Link href="#top" className="logo-wrap" aria-label="Elite Pressure Bros home">
           <Image
-            src="/images/ElitePressurePros_logo.jpg"
+            src="/images/ElitePressureProsKC_Logo.svg"
             alt="Elite Pressure Bros logo"
             width={72}
             height={72}
