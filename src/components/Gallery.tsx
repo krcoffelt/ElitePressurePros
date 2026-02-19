@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { siteContent } from "@/content/site";
 
 const AUTO_ADVANCE_MS = 3000;
+const ANIMATION_MS = 650;
 
 function wrapIndex(index: number, total: number) {
   return (index + total) % total;
@@ -14,19 +15,26 @@ function wrapIndex(index: number, total: number) {
 export function Gallery() {
   const images = siteContent.galleryImages;
   const totalImages = images.length;
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [centerIndex, setCenterIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const visibleImages = useMemo(
-    () =>
-      totalImages > 0
-        ? [
-            { slot: "left", image: images[wrapIndex(activeIndex - 1, totalImages)] },
-            { slot: "center", image: images[wrapIndex(activeIndex, totalImages)] },
-            { slot: "right", image: images[wrapIndex(activeIndex + 1, totalImages)] }
-          ]
-        : [],
-    [activeIndex, images, totalImages]
-  );
+  const slots = useMemo(() => {
+    if (totalImages === 0) {
+      return [];
+    }
+
+    const left = images[wrapIndex(centerIndex - 1, totalImages)];
+    const center = images[wrapIndex(centerIndex, totalImages)];
+    const right = images[wrapIndex(centerIndex + 1, totalImages)];
+    const incoming = images[wrapIndex(centerIndex + 2, totalImages)];
+
+    return [
+      { role: "left", image: left },
+      { role: "center", image: center },
+      { role: "right", image: right },
+      { role: "incoming", image: incoming }
+    ] as const;
+  }, [centerIndex, images, totalImages]);
 
   useEffect(() => {
     if (totalImages < 2) {
@@ -34,11 +42,24 @@ export function Gallery() {
     }
 
     const timer = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % totalImages);
+      setIsAnimating((current) => (current ? current : true));
     }, AUTO_ADVANCE_MS);
 
     return () => clearInterval(timer);
   }, [totalImages]);
+
+  useEffect(() => {
+    if (!isAnimating || totalImages < 2) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => {
+      setCenterIndex((current) => wrapIndex(current + 1, totalImages));
+      setIsAnimating(false);
+    }, ANIMATION_MS);
+
+    return () => clearTimeout(timer);
+  }, [isAnimating, totalImages]);
 
   return (
     <section id="gallery" className="section" aria-labelledby="gallery-title">
@@ -47,15 +68,15 @@ export function Gallery() {
           Elite Pressure Bros photo gallery slideshow
         </h2>
 
-        <div className="carousel-wrap" aria-live="polite">
-          {visibleImages.map(({ slot, image }) => (
-            <figure className={`carousel-slide ${slot}`} key={slot}>
+        <div className={`carousel-track ${isAnimating ? "is-animating" : ""}`} aria-live="off">
+          {slots.map(({ role, image }) => (
+            <figure className={`carousel-slide ${role}`} key={`${role}-${image.src}`}>
               <div className="image-frame">
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="(max-width: 700px) 33vw, (max-width: 1100px) 33vw, 30vw"
+                  sizes="(max-width: 700px) 42vw, (max-width: 1100px) 34vw, 30vw"
                   className="cover"
                 />
               </div>
