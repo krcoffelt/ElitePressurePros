@@ -6,14 +6,14 @@ import { useEffect, useMemo, useState } from "react";
 import { siteContent } from "@/content/site";
 
 const AUTO_ADVANCE_MS = 3000;
-const ANIMATION_MS = 650;
+const ANIMATION_MS = 900;
 
 function wrapIndex(index: number, total: number) {
   return (index + total) % total;
 }
 
 export function Gallery() {
-  const images = siteContent.galleryImages;
+  const images = Array.from(siteContent.galleryImages);
   const totalImages = images.length;
   const [centerIndex, setCenterIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -70,7 +70,7 @@ export function Gallery() {
 
         <div className={`carousel-track ${isAnimating ? "is-animating" : ""}`} aria-live="off">
           {slots.map(({ role, image }) => (
-            <figure className={`carousel-slide ${role}`} key={`${role}-${image.src}`}>
+            <figure className={`carousel-slide ${role}`} key={role}>
               <div className="image-frame">
                 <Image
                   src={image.src}
