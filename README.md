@@ -1,71 +1,24 @@
-# Elite Pressure Bros Website
+# Elite Pressure Pros Website
 
-Single-page Next.js 15 + TypeScript marketing site focused on local SEO and free-estimate conversion.
+Static marketing website for Elite Pressure Pros LLC, a Kansas City Metro exterior cleaning company.
 
-## Included
-
-- App Router single-page layout with sections: Hero, Services, Why Us, Gallery, Testimonials, Estimate Form, Service Areas, FAQ, Footer
-- Sticky mobile CTA and primary estimate CTA flow
-- API route: `POST /api/estimate`
-- Zod validation and honeypot spam protection
-- Email delivery integration via Resend (`src/lib/email/sendEstimate.ts`)
-- SEO metadata + OpenGraph + Twitter + `robots.ts` + `sitemap.ts`
-- JSON-LD for `LocalBusiness`, `Service`, and `FAQPage`
-- Placeholder contact data marked with TODO comments
-
-## Theme Colors (Logo-Matched)
-
-Palette sampled from `/public/images/ElitePressurePros_logo.jpg` and applied in `/src/app/globals.css`:
-
-- `--epb-navy: #000020`
-- `--epb-cyan: #00C8F8`
-- `--epb-blue: #003098`
-- `--epb-white: #F8F8F8`
-
-## Setup
-
-1. Install dependencies:
+## Preview Locally
 
 ```bash
-npm install
+python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-2. Create env file:
+Then open `http://127.0.0.1:4173/`.
 
-```bash
-cp .env.example .env.local
-```
+## Structure
 
-3. Update TODO placeholders in `.env.local`.
+- `index.html` - homepage
+- `services/` - service overview and service detail pages
+- `service-areas/` - KC metro service-area hub and location pages
+- `contact/` - estimate request page
+- `assets/` - shared CSS, JS, logo, and project images
+- `sitemap.xml` and `robots.txt` - crawl discovery files
 
-4. Start dev server:
+## Launch Notes
 
-```bash
-npm run dev
-```
-
-## Environment Variables
-
-See `.env.example` for required values:
-
-- `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_BUSINESS_PHONE`
-- `NEXT_PUBLIC_BUSINESS_SMS`
-- `NEXT_PUBLIC_BUSINESS_EMAIL`
-- `NEXT_PUBLIC_BUSINESS_ADDRESS`
-- `RESEND_API_KEY`
-- `ESTIMATE_TO_EMAIL`
-- `ESTIMATE_FROM_EMAIL`
-
-## Tests
-
-```bash
-npm run test
-```
-
-## Launch Checklist
-
-- Replace placeholder contact info and testimonials.
-- Validate `/sitemap.xml` and `/robots.txt`.
-- Submit a live estimate form test and confirm email delivery.
-- Run Lighthouse and verify SEO/accessibility/performance targets.
+Confirm final service areas, insurance language, review/testimonial content, owner-approved photos, and any booking integration before publishing.
