@@ -62,3 +62,64 @@ document.querySelectorAll("form[data-estimate-form]").forEach((form) => {
     }
   });
 });
+
+document.querySelectorAll("[data-review-carousel]").forEach((carousel) => {
+  const track = carousel.querySelector(".review-carousel-track");
+  const slides = Array.from(carousel.querySelectorAll(".review-slide"));
+  const prev = carousel.querySelector("[data-review-prev]");
+  const next = carousel.querySelector("[data-review-next]");
+  const dotsWrap = carousel.querySelector(".review-dots");
+  let current = 0;
+  let timer;
+
+  if (!track || !slides.length) return;
+
+  const dots = slides.map((_, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Show review ${index + 1}`);
+    dot.addEventListener("click", () => {
+      setSlide(index);
+      restart();
+    });
+    dotsWrap?.append(dot);
+    return dot;
+  });
+
+  const setSlide = (index) => {
+    current = (index + slides.length) % slides.length;
+    track.style.transform = `translateX(${-current * 100}%)`;
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle("is-active", slideIndex === current);
+      slide.setAttribute("aria-hidden", String(slideIndex !== current));
+    });
+    dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === current));
+  };
+
+  const stop = () => window.clearInterval(timer);
+  const start = () => {
+    stop();
+    timer = window.setInterval(() => setSlide(current + 1), 5200);
+  };
+  const restart = () => start();
+
+  prev?.addEventListener("click", () => {
+    setSlide(current - 1);
+    restart();
+  });
+
+  next?.addEventListener("click", () => {
+    setSlide(current + 1);
+    restart();
+  });
+
+  carousel.addEventListener("mouseenter", stop);
+  carousel.addEventListener("mouseleave", start);
+  carousel.addEventListener("focusin", stop);
+  carousel.addEventListener("focusout", start);
+
+  setSlide(0);
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    start();
+  }
+});
