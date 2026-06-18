@@ -2,5 +2,6 @@
 .playwright-mcp/
 .agents/
 node_modules/
+dist/
 *.log
 *.tmp
