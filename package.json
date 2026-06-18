@@ -1,0 +1,9 @@
+{
+  "name": "elite-pressure-pros-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static marketing website for Elite Pressure Pros LLC.",
+  "scripts": {
+    "build": "echo \"Static site: no build step required.\""
+  }
+}
